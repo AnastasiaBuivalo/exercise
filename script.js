@@ -96,3 +96,26 @@ const getTotalIncomeAmount = (data) => {
 };
 
 console.log(getTotalIncomeAmount(funds));
+
+
+const multiply20 = (price) => price * 20;
+const divide100 = (price) => price / 100;
+const normalizePrice = (price) => price.toFixed(2);
+
+const discount = normalizePrice(divide100(multiply20(200)));
+
+const compose = (...rest) => (x) => {
+    return rest.reduceRight(function(previous, current){
+        return current(previous);
+    }, x);
+};
+
+console.log(discount);
+console.log(compose(normalizePrice, divide100, multiply20)(200));
+
+const add1 = function(a){return a + 1}
+const addAll3 = function(a,b,c){return a + b + c}
+
+const composeWithArgs = (...rest) => rest.reduceRight((previous, current) => (...restArgs) => current(previous(...restArgs)));
+
+console.log(composeWithArgs(add1,addAll3)(1,2,3));//  => Вернет 7
